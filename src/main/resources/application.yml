@@ -1,0 +1,4 @@
+payment:
+  gateway: paypal
+  timeout: 100
+  supported-currencies: USD,BDT
