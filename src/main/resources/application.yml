@@ -1,4 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/spring-store
+    username: rayhan
+    password: rayhan123
+  application:
+    name: spring-store
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+#    properties:
+#      hibernate:
+#        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
 payment:
   gateway: paypal
-  timeout: 100
-  supported-currencies: USD,BDT
