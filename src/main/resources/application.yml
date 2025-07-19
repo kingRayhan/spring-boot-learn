@@ -7,10 +7,7 @@ spring:
     name: spring-store
   jpa:
     hibernate:
-      ddl-auto: create-drop
-#    properties:
-#      hibernate:
-#        dialect: org.hibernate.dialect.PostgreSQLDialect
+      ddl-auto: none
     show-sql: true
 
 payment:
