@@ -52,8 +52,19 @@ export const categoriesTable = pgTable("categories", {
 export const productsTable = pgTable("products", {
   id: uuid("id").defaultRandom().primaryKey(),
   name: varchar({ length: 255 }).notNull(),
+  description: varchar({ length: 255 }),
   price: integer().notNull(),
   categoryId: uuid("category_id")
     .notNull()
     .references(() => categoriesTable.id, { onDelete: "restrict" }),
+});
+
+export const wishlistsTable = pgTable("wishlists", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => usersTable.id, { onDelete: "cascade" }),
+  productId: uuid("product_id")
+    .notNull()
+    .references(() => productsTable.id, { onDelete: "cascade" }),
 });
