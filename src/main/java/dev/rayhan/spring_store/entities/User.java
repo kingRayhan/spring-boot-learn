@@ -6,7 +6,7 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Setter @Getter @ToString @Builder
+@Data @Builder
 @AllArgsConstructor @NoArgsConstructor
 @Entity
 @Table(name = "users")
@@ -26,10 +26,6 @@ public class User {
     @ToString.Exclude
     private String password;
 
-//    @OneToOne(mappedBy = "user")
-//    @ToString.Exclude
-//    private Profile profile;
-
     @OneToMany(mappedBy = "user")
 //    @ToString.Exclude
     @Builder.Default
@@ -38,5 +34,10 @@ public class User {
     public void addAddress(Address address) {
         addresses.add(address);
         address.setUser(this);
+    }
+
+    public void removeAddress(Address address) {
+        addresses.remove(address);
+        address.setUser(null);
     }
 }
