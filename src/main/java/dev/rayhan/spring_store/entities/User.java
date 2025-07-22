@@ -41,6 +41,10 @@ public class User {
     @Builder.Default
     private Set<Tag> tags = new HashSet<>();
 
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private Set<Wishlist> wishlists = new HashSet<>();
+
     public void addAddress(Address address) {
         addresses.add(address);
         address.setUser(this);
