@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -16,7 +17,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    private UUID id;
 
     @Column(name = "name")
     private String name;

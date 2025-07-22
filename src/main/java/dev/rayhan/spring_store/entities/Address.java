@@ -3,6 +3,8 @@ package dev.rayhan.spring_store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.UUID;
+
 @Setter @Getter @ToString @Builder @AllArgsConstructor @NoArgsConstructor
 
 @Entity
@@ -12,7 +14,7 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    private UUID id;
 
     @Column(name = "street")
     private String street;

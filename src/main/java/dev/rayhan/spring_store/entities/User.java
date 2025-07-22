@@ -3,10 +3,7 @@ package dev.rayhan.spring_store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Data @Builder
 @AllArgsConstructor @NoArgsConstructor
@@ -16,7 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    private UUID id;
 
     @Column(name = "name")
     private String name;

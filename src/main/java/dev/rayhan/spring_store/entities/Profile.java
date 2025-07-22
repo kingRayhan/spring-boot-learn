@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
@@ -13,7 +14,7 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    private UUID id;
 
     @Column(name = "bio")
     private String bio;

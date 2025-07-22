@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Data @AllArgsConstructor @NoArgsConstructor @Builder
 
@@ -15,7 +16,7 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private String id;
+    private UUID id;
 
     @Column(name = "name")
     private String name;
