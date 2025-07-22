@@ -55,5 +55,5 @@ export const productsTable = pgTable("products", {
   price: integer().notNull(),
   categoryId: uuid("category_id")
     .notNull()
-    .references(() => categoriesTable.id, { onDelete: "cascade" }),
+    .references(() => categoriesTable.id, { onDelete: "restrict" }),
 });
