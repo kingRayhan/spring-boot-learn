@@ -1,14 +1,12 @@
 package dev.rayhan.spring_store.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import java.time.LocalDate;
 
 
-@Setter @Getter @ToString
+@Data @AllArgsConstructor @NoArgsConstructor @Builder
 @Entity
 @Table(name = "profiles")
 public class Profile {
@@ -31,5 +29,7 @@ public class Profile {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
+//    @MapsId
     private User user;
 }

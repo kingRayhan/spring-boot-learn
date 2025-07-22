@@ -1,4 +1,3 @@
-import { desc } from "drizzle-orm";
 import { date, integer, pgTable, uuid, varchar } from "drizzle-orm/pg-core";
 
 export const usersTable = pgTable("users", {
@@ -43,4 +42,18 @@ export const userTagsTable = pgTable("user_tags", {
   tagId: uuid("tag_id")
     .notNull()
     .references(() => tagsTable.id, { onDelete: "cascade" }),
+});
+
+export const categoriesTable = pgTable("categories", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: varchar({ length: 255 }).notNull(),
+});
+
+export const productsTable = pgTable("products", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  name: varchar({ length: 255 }).notNull(),
+  price: integer().notNull(),
+  categoryId: uuid("category_id")
+    .notNull()
+    .references(() => categoriesTable.id, { onDelete: "cascade" }),
 });
