@@ -27,14 +27,14 @@ public class User extends BaseEntity {
     @ToString.Exclude
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @Builder.Default
     private List<Address> addresses = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     private Profile profile;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST})
     @JoinTable(
             name = "user_tags",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -57,8 +57,7 @@ public class User extends BaseEntity {
         address.setUser(null);
     }
 
-    public void addTag(String tagName) {
-        var tag = Tag.builder().name(tagName).build();
+    public void addTag(Tag tag) {
         tags.add(tag);
         tag.getUsers().add(this);
     }
@@ -72,5 +71,9 @@ public class User extends BaseEntity {
     public void setProfile(Profile profile) {
         this.profile = profile;
         profile.setUser(this);
+    }
+
+    public void removeProfile() {
+        this.profile = null;
     }
 }
