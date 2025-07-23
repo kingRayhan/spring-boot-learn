@@ -1,4 +1,9 @@
 package dev.rayhan.spring_store.repositories;
 
-public interface ProductRepository extends org.springframework.data.repository.CrudRepository<dev.rayhan.spring_store.entities.Product, java.util.UUID> {
-  }
+import dev.rayhan.spring_store.entities.Product;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.UUID;
+
+public interface ProductRepository extends CrudRepository<Product, UUID> {
+}

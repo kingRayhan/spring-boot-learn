@@ -7,10 +7,13 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 
-@Data @AllArgsConstructor @NoArgsConstructor @Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "profiles")
-public class Profile {
+public class Profile extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -31,6 +34,5 @@ public class Profile {
     @OneToOne
     @JoinColumn(name = "user_id")
     @ToString.Exclude
-//    @MapsId
     private User user;
 }

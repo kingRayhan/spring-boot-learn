@@ -6,9 +6,6 @@ spring:
   application:
     name: spring-store
   jpa:
-    hibernate:
-      ddl-auto: none
+#    hibernate:
+#      ddl-auto: create
     show-sql: true
-
-payment:
-  gateway: paypal

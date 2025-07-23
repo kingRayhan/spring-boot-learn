@@ -1,7 +1,31 @@
 package dev.rayhan.spring_store.entities;
 
-import jakarta.persistence.Entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.UUID;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 
 @Entity
-public class Category {
-  }
+@Table(name = "categories")
+public class Category extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id")
+    private UUID id;
+
+    @Column(name = "name")
+    private String name;
+
+    @OneToMany(mappedBy = "category")
+    @Builder.Default
+    @ToString.Exclude
+    Set<Product> products = new HashSet<>();
+}

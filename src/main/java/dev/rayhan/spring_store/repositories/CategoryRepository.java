@@ -1,4 +1,9 @@
 package dev.rayhan.spring_store.repositories;
 
-public interface CategoryRepository extends org.springframework.data.repository.CrudRepository<dev.rayhan.spring_store.entities.Category, java.util.UUID> {
-  }
+import dev.rayhan.spring_store.entities.Category;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.UUID;
+
+public interface CategoryRepository extends CrudRepository<Category, UUID> {
+}

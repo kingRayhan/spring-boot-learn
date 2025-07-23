@@ -7,14 +7,16 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import java.util.UUID;
 
-@Setter @Getter
+@Setter
+@Getter
 @Builder
-@AllArgsConstructor @NoArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 
 
 @Entity
 @Table(name = "wishlists")
-public class Wishlist {
+public class Wishlist extends BaseEntity {
     @Id
     @Column(name = "id", nullable = false)
     private UUID id;

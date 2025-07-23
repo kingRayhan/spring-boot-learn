@@ -1,4 +1,9 @@
 package dev.rayhan.spring_store.repositories;
 
-public interface AddressRepository extends org.springframework.data.repository.CrudRepository<dev.rayhan.spring_store.entities.Address, java.util.UUID> {
-  }
+import dev.rayhan.spring_store.entities.Address;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.UUID;
+
+public interface AddressRepository extends CrudRepository<Address, UUID> {
+}
