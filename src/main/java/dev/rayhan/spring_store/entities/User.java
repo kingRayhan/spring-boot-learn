@@ -5,10 +5,9 @@ import lombok.*;
 
 import java.util.*;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter @Setter @Builder
+@AllArgsConstructor @NoArgsConstructor
+
 @Entity
 @Table(name = "users")
 public class User extends BaseEntity {
@@ -29,22 +28,26 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
     @Builder.Default
+    @ToString.Exclude
     private List<Address> addresses = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE}, orphanRemoval = true)
+    @ToString.Exclude
     private Profile profile;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "user_tags",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
     @Builder.Default
+    @ToString.Exclude
     private Set<Tag> tags = new HashSet<>();
 
     @OneToMany(mappedBy = "user")
     @Builder.Default
+    @ToString.Exclude
     private Set<Wishlist> wishlists = new HashSet<>();
 
     public void addAddress(Address address) {
@@ -57,9 +60,9 @@ public class User extends BaseEntity {
         address.setUser(null);
     }
 
-    public void addTag(Tag tag) {
-        tags.add(tag);
-        tag.getUsers().add(this);
+    public void addTags(List<Tag> tags) {
+        this.tags.addAll(tags);
+        tags.forEach(tag -> tag.getUsers().add(this));
     }
 
     public void removeTag(String tagName) {

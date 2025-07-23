@@ -7,10 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter @Setter @Builder
+@AllArgsConstructor @NoArgsConstructor
+
 @Entity
 @Table(name = "tags")
 public class Tag extends BaseEntity {
@@ -29,5 +28,4 @@ public class Tag extends BaseEntity {
     @ToString.Exclude
     @Builder.Default
     private Set<User> users = new HashSet<>();
-
 }

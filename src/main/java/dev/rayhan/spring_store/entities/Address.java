@@ -5,15 +5,10 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Setter
-@Getter
-@ToString
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter @Setter @Builder
+@AllArgsConstructor @NoArgsConstructor
 
 @Entity
-@Data
 @Table(name = "addresses")
 public class Address extends BaseEntity {
     @Id

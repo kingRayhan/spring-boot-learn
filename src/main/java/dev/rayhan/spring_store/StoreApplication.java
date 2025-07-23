@@ -19,8 +19,8 @@ public class StoreApplication {
         var userRepository = context.getBean(UserRepository.class);
         var userService = context.getBean(UserService.class);
 
-//        userService.createUserWithRelatedData();
-        userService.deleteRelatedData();
-//        userRepository.deleteById(UUID.fromString("2f147f10-8c3f-4d91-bb8a-dcae4c329686"));
+        userService.createUserWithRelatedData();
+//        userService.deleteRelatedData();
+//        userRepository.deleteById(UUID.fromString("ec9c8116-c343-440a-a77f-fa2b3acb69de"));
     }
 }
