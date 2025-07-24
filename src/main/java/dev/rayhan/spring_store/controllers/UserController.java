@@ -2,6 +2,7 @@ package dev.rayhan.spring_store.controllers;
 
 import dev.rayhan.spring_store.common.PaginationHelper;
 import dev.rayhan.spring_store.common.ValidationErrorHandler;
+import dev.rayhan.spring_store.dtos.RegisterUserPayload;
 import dev.rayhan.spring_store.dtos.UserListFilterRequestQueryParam;
 import dev.rayhan.spring_store.entities.User;
 import dev.rayhan.spring_store.mappers.UserMapper;
@@ -11,16 +12,33 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
-class UserController {
+public class UserController {
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
-//    private final UserDtoMapper userDtoMapper;
+    private final UserMapper mapper;
+
+    @PostMapping("/")
+    public ResponseEntity<?> registerUser(
+            @RequestBody RegisterUserPayload payload,
+            BindingResult result,
+            UriComponentsBuilder uriBuilder
+    ) {
+        var errors = ValidationErrorHandler.handleValidationErrors(result);
+        if (errors != null) {
+            return ResponseEntity.badRequest().body(errors);
+        }
+        var user = mapper.toEntity(payload);
+        var createdUser = userRepository.save(user);
+
+        var uri = uriBuilder.path("/users/{id}").buildAndExpand(createdUser.getId()).toUri();
+        return ResponseEntity.created(uri).body(mapper.toDto(createdUser));
+    }
 
     @GetMapping("/")
     public ResponseEntity<?> getAllUsers(
@@ -43,7 +61,7 @@ class UserController {
                                 )
                         )
                         .stream()
-                        .map(userMapper::toDto).toList()
+                        .map(mapper::toDto).toList()
         );
     }
 
@@ -58,4 +76,6 @@ class UserController {
 
         return ResponseEntity.ok(user);
     }
+
+
 }

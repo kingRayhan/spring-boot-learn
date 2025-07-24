@@ -13,15 +13,4 @@ public class BaseEntity {
 
     @Column(name = "updated_at")
     LocalDateTime updatedAt;
-
-    @PrePersist
-    public void initTimeStamp(){
-           createdAt = LocalDateTime.now();
-           updatedAt = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    public void setUpdatedAt(){
-        updatedAt = LocalDateTime.now();
-    }
 }
