@@ -3,15 +3,19 @@ package dev.rayhan.spring_store.controllers;
 import dev.rayhan.spring_store.common.PaginationHelper;
 import dev.rayhan.spring_store.common.ValidationErrorHandler;
 import dev.rayhan.spring_store.dtos.RegisterUserPayload;
+import dev.rayhan.spring_store.dtos.UpdateUserRequestPayload;
+import dev.rayhan.spring_store.dtos.UserDto;
 import dev.rayhan.spring_store.dtos.UserListFilterRequestQueryParam;
 import dev.rayhan.spring_store.entities.User;
 import dev.rayhan.spring_store.mappers.UserMapper;
 import dev.rayhan.spring_store.repositories.UserRepository;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.UUID;
@@ -33,11 +37,11 @@ public class UserController {
         if (errors != null) {
             return ResponseEntity.badRequest().body(errors);
         }
-        var user = mapper.toEntity(payload);
+        var user = mapper.registerPayloadToEntity(payload);
         var createdUser = userRepository.save(user);
 
         var uri = uriBuilder.path("/users/{id}").buildAndExpand(createdUser.getId()).toUri();
-        return ResponseEntity.created(uri).body(mapper.toDto(createdUser));
+        return ResponseEntity.created(uri).body(mapper.entityToUserDto(createdUser));
     }
 
     @GetMapping("/")
@@ -61,7 +65,7 @@ public class UserController {
                                 )
                         )
                         .stream()
-                        .map(mapper::toDto).toList()
+                        .map(mapper::entityToUserDto).toList()
         );
     }
 
@@ -75,6 +79,19 @@ public class UserController {
         }
 
         return ResponseEntity.ok(user);
+    }
+
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<Void> updateUserById(
+            @PathVariable UUID id,
+            @RequestBody UpdateUserRequestPayload payload
+    ) {
+        var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        mapper.syncUpdateUserPayloadWithEntity(payload, user);
+
+        userRepository.save(user);
+        return ResponseEntity.noContent().build();
     }
 
 

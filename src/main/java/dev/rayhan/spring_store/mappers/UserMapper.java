@@ -2,12 +2,19 @@ package dev.rayhan.spring_store.mappers;
 
 
 import dev.rayhan.spring_store.dtos.RegisterUserPayload;
+import dev.rayhan.spring_store.dtos.UpdateUserRequestPayload;
 import dev.rayhan.spring_store.dtos.UserDto;
 import dev.rayhan.spring_store.entities.User;
+import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
-    UserDto toDto(User user);
-    User toEntity(RegisterUserPayload registerUserPayload);
+    UserDto entityToUserDto(User user);
+    User registerPayloadToEntity(RegisterUserPayload registerUserPayload);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void syncUpdateUserPayloadWithEntity(UpdateUserRequestPayload userDto, @MappingTarget User user);
 }
