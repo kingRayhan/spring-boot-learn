@@ -6,6 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserListFilterQueryParam extends BaseFilterPayload{
-    private UserSortByColumn sortBy = UserSortByColumn.name;
+public class UserListFilterRequestQueryParam extends BaseFilterRequestQueryParam {
+    private UserSortByColumn sortBy = UserSortByColumn.created_at;
 }

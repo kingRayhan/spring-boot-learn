@@ -1,9 +1,15 @@
 package dev.rayhan.spring_store.dtos;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.UUID;
 
-
-public interface ProductListDto {
-    UUID getId();
-    String getName();
+@Getter @Setter
+public class ProductListDto {
+    private UUID id;
+    private String name;
+    private String description;
+    private Double price;
+    private String categoryId;
 }

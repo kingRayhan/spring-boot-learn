@@ -1,10 +1,9 @@
 package dev.rayhan.spring_store.dtos;
 
-public enum UserSortByColumn {
+public enum ProductSortByColumn {
     name,
-    email,
+    description,
+    price,
     created_at,
     updated_at
 }
-
-
