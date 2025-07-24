@@ -2,17 +2,11 @@ package dev.rayhan.spring_store.entities;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.UUID;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Getter @Setter @AllArgsConstructor @NoArgsConstructor @Builder @ToString
 
 @Entity
 @Table(name = "products")
@@ -31,7 +25,7 @@ public class Product extends BaseEntity {
     @Column(name = "price")
     private Double price;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.PERSIST})
     @JoinColumn(name = "category_id")
     private Category category;
 }

@@ -3,6 +3,7 @@ package dev.rayhan.spring_store.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Getter @Setter @Builder
@@ -45,10 +46,20 @@ public class User extends BaseEntity {
     @ToString.Exclude
     private Set<Tag> tags = new HashSet<>();
 
-    @OneToMany(mappedBy = "user")
-    @Builder.Default
-    @ToString.Exclude
-    private Set<Wishlist> wishlists = new HashSet<>();
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "wishlists",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private Set<Product> favoriteProducts = new HashSet<>();
+
+    @Column(name = "created_at")
+    LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    LocalDateTime updatedAt;
+
 
     public void addAddress(Address address) {
         addresses.add(address);

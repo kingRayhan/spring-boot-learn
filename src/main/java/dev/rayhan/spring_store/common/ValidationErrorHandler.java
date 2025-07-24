@@ -1,4 +1,4 @@
-package dev.rayhan.spring_api.common;
+package dev.rayhan.spring_store.common;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 
-
 @Entity
 @Table(name = "wishlists")
 public class Wishlist extends BaseEntity {
