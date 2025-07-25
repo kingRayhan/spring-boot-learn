@@ -1,10 +1,8 @@
 package dev.rayhan.spring_store.repositories;
 
-import dev.rayhan.spring_store.dtos.UserDto;
-import dev.rayhan.spring_store.entities.Product;
-import dev.rayhan.spring_store.entities.User;
+import dev.rayhan.spring_store.common.dtos.UserDto;
+import dev.rayhan.spring_store.common.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.UUID;

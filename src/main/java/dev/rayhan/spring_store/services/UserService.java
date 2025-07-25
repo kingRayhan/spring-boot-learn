@@ -1,16 +1,12 @@
 package dev.rayhan.spring_store.services;
 
-import dev.rayhan.spring_store.entities.Address;
-import dev.rayhan.spring_store.entities.Profile;
-import dev.rayhan.spring_store.entities.Tag;
-import dev.rayhan.spring_store.entities.User;
+import dev.rayhan.spring_store.common.entities.Tag;
+import dev.rayhan.spring_store.common.entities.User;
 import dev.rayhan.spring_store.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 

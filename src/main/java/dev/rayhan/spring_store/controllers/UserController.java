@@ -2,13 +2,14 @@ package dev.rayhan.spring_store.controllers;
 
 import dev.rayhan.spring_store.common.PaginationHelper;
 import dev.rayhan.spring_store.common.ValidationErrorHandler;
-import dev.rayhan.spring_store.dtos.RegisterUserPayload;
-import dev.rayhan.spring_store.dtos.UpdateUserRequestPayload;
-import dev.rayhan.spring_store.dtos.UserDto;
-import dev.rayhan.spring_store.dtos.UserListFilterRequestQueryParam;
-import dev.rayhan.spring_store.entities.User;
-import dev.rayhan.spring_store.mappers.UserMapper;
+import dev.rayhan.spring_store.common.dtos.ChangePasswordPayload;
+import dev.rayhan.spring_store.common.dtos.RegisterUserPayload;
+import dev.rayhan.spring_store.common.dtos.UpdateUserRequestPayload;
+import dev.rayhan.spring_store.common.dtos.UserListFilterRequestQueryParam;
+import dev.rayhan.spring_store.common.entities.User;
+import dev.rayhan.spring_store.common.mappers.UserMapper;
 import dev.rayhan.spring_store.repositories.UserRepository;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
+@Tag(name = "Users", description = "User related operations")
 public class UserController {
     private final UserRepository userRepository;
     private final UserMapper mapper;
@@ -94,5 +96,29 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUserById(
+            @PathVariable UUID id
+    ) {
+        var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        userRepository.delete(user);
+        return ResponseEntity.noContent().build();
+    }
 
+    @PatchMapping("/{id}/change-password")
+    public ResponseEntity<Void> changePasswordForUserById(
+            @PathVariable UUID id,
+            @RequestBody ChangePasswordPayload payload
+    ) {
+        var user = userRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+        
+        if(!user.getPassword().equals(payload.getOldPassword())){
+            return ResponseEntity.badRequest().build();
+        }
+
+        user.setPassword(payload.getNewPassword());
+        userRepository.save(user);
+
+        return ResponseEntity.noContent().build();
+    }
 }

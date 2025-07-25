@@ -1,6 +1,6 @@
 package dev.rayhan.spring_store.common;
 
-import dev.rayhan.spring_store.dtos.SortDirection;
+import dev.rayhan.spring_store.common.dtos.SortDirection;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
