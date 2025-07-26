@@ -29,10 +29,16 @@ class CartController {
   private final ProductRepository productRepository;
   private final CartItemRepository cartItemRepository;
 
-  @PostMapping("/")
+  @PostMapping
   public ResponseEntity<?> store() {
     var cart = cartRepository.save(Cart.builder().build());
     return new ResponseEntity<>(mapper.toDto(cart), HttpStatus.CREATED);
+  }
+
+  @GetMapping("/{cartId}")
+  public ResponseEntity<CartDto> getCartDetails(@PathVariable String cartId) {
+    var cart = cartRepository.findById(UUID.fromString(cartId)).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+    return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(cart));
   }
 
   @PostMapping("/{cartId}/items")
@@ -46,7 +52,7 @@ class CartController {
     var cartItem = cart.getItems().stream().filter(item -> item.getProduct().getId().equals(product.getId())).findFirst().orElse(null);
     if (cartItem != null) {
       cartItem.setQuantity(cartItem.getQuantity() + 1);
-    }else{
+    } else {
       cartItem = CartItem.builder().product(product).quantity(1).build();
     }
     cart.addItemToCart(cartItem);
@@ -54,5 +60,29 @@ class CartController {
 
     var cartItemDto = mapper.toDto(cartItem);
     return new ResponseEntity<>(cartItemDto, HttpStatus.CREATED);
+  }
+
+  @DeleteMapping("/{cartId}/items/{productId}")
+  public ResponseEntity<CartItemDto> deleteCartItem(
+    @PathVariable UUID cartId,
+    @PathVariable UUID productId
+  ) {
+    var cart = cartRepository.findById(cartId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+    cart.getItems().stream().filter(item -> item.getProduct().getId().equals(productId)).findFirst().orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart item not found"));
+
+
+    cart.removeItemFromCartByProductId(productId);
+    cartRepository.save(cart);
+    return ResponseEntity.noContent().build();
+  }
+
+  @DeleteMapping("/{cartId}/items")
+  public ResponseEntity<Void> clearCartItems(
+    @PathVariable UUID cartId
+  ) {
+    var cart = cartRepository.findById(cartId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cart not found"));
+    cart.clearCart();
+    cartRepository.save(cart);
+    return ResponseEntity.noContent().build();
   }
 }

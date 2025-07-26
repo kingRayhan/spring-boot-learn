@@ -36,4 +36,22 @@ public class Cart {
     items.add(item);
     item.setCart(this);
   }
+
+  public CartItem getItemByProductId(UUID productId) {
+    return items.stream().filter(item -> item.getProduct().getId().equals(productId)).findFirst().orElse(null);
+  }
+
+  public void removeItemFromCartByProductId(UUID productId) {
+    var item = getItemByProductId(productId);
+    items.remove(item);
+    item.setCart(null);
+  }
+
+  public Double getTotalPrice() {
+    return items.stream().mapToDouble(CartItem::getTotalPrice).sum();
+  }
+
+  public void clearCart() {
+    items.clear();
+  }
 }
