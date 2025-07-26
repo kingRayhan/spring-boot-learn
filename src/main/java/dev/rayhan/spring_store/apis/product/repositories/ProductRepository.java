@@ -1,6 +1,6 @@
 package dev.rayhan.spring_store.apis.product.repositories;
 
-import dev.rayhan.spring_store.common.entities.Category;
+import dev.rayhan.spring_store.apis.product.entities.Category;
 import dev.rayhan.spring_store.apis.product.entities.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

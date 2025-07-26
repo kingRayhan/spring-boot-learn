@@ -1,6 +1,6 @@
 package dev.rayhan.spring_store.apis.product.repositories;
 
-import dev.rayhan.spring_store.common.entities.Category;
+import dev.rayhan.spring_store.apis.product.entities.Category;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.UUID;

@@ -2,7 +2,6 @@ package dev.rayhan.spring_store.apis.product.entities;
 
 
 import dev.rayhan.spring_store.common.entities.BaseEntity;
-import dev.rayhan.spring_store.common.entities.Category;
 import jakarta.persistence.*;
 import lombok.*;
 

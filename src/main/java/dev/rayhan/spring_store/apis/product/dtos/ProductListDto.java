@@ -1,4 +1,4 @@
-package dev.rayhan.spring_store.common.dtos;
+package dev.rayhan.spring_store.apis.product.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

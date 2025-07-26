@@ -3,7 +3,7 @@ package dev.rayhan.spring_store.apis.product.mappers;
 import dev.rayhan.spring_store.apis.product.dtos.CreateProductPayload;
 import dev.rayhan.spring_store.apis.product.dtos.UpdateProductPayload;
 import dev.rayhan.spring_store.apis.product.entities.Product;
-import dev.rayhan.spring_store.common.dtos.ProductListDto;
+import dev.rayhan.spring_store.apis.product.dtos.ProductListDto;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")

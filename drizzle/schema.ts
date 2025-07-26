@@ -87,3 +87,20 @@ export const wishlistsTable = pgTable("wishlists", {
     .references(() => productsTable.id, { onDelete: "cascade" }),
   ...dateProps,
 });
+
+export const cartTable = pgTable("carts", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  ...dateProps,
+});
+
+export const cartItemsTable = pgTable("cart_items", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  cartId: uuid("cart_id")
+    .notNull()
+    .references(() => cartTable.id, { onDelete: "cascade" }),
+  productId: uuid("product_id")
+    .notNull()
+    .references(() => productsTable.id, { onDelete: "cascade" }),
+  quantity: integer().notNull().default(0),
+  ...dateProps,
+});
